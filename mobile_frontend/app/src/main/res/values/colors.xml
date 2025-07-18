@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Updated Pastel Palette -->
-    <color name="primary">#7BD3EA</color>       <!-- Blue -->
-    <color name="secondary">#A1EEBD</color>     <!-- Mint Green -->
-    <color name="accent">#F6F7C4</color>        <!-- Yellow -->
-    <color name="extra">#F6D6D6</color>         <!-- Pink -->
-    <color name="bg_main">#F6F7C4</color>
-    <color name="bg_header">#F6D6D6</color>
-    <color name="bg_grid">#A1EEBD</color>
-    <color name="display_bg">#FFFFFF</color>
+    <color name="primary">#8DBCC7</color>
+    <color name="secondary">#A4CCD9</color>
+    <color name="accent">#C4E1E6</color>
+    <color name="bg_main">#EBFFD8</color>
+    <color name="bg_header">#C4E1E6</color>
+    <color name="display_bg">#FFFFFFFF</color>
+    <color name="bg_grid">#A4CCD9</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
-    <color name="btn_primary_text">#FFFFFF</color>
-    <color name="btn_accent_text">#7BD3EA</color>
-    <color name="btn_neutral_text">#3C3C3C</color>
 </resources>
