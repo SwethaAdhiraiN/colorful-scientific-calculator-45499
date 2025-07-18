@@ -1,9 +1,14 @@
 package com.example.mobilefrontend
 
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import android.os.Handler
+import android.os.Looper
 import kotlin.math.*
 
 /**
@@ -14,6 +19,7 @@ import kotlin.math.*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var display: TextView
+    private lateinit var header: TextView
     private var inputExpr: String = ""
     private var lastAnswer: Double? = null
 
@@ -23,7 +29,22 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.AppTheme)
         setContentView(R.layout.activity_main)
 
+        header = findViewById(R.id.tvHeader)
         display = findViewById(R.id.tvDisplay)
+
+        // Animate the header (splash entry effect)
+        header.visibility = View.INVISIBLE
+        Handler(Looper.getMainLooper()).postDelayed({
+            header.visibility = View.VISIBLE
+            header.startAnimation(AnimationUtils.loadAnimation(this, R.anim.splash_header_in))
+        }, 150)
+
+        // Animate the calculator display at start (fade-slide in)
+        display.visibility = View.INVISIBLE
+        Handler(Looper.getMainLooper()).postDelayed({
+            display.visibility = View.VISIBLE
+            display.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in_slide_up))
+        }, 300)
 
         val buttonIds = listOf(
             R.id.btn0, R.id.btn1, R.id.btn2, R.id.btn3, R.id.btn4, R.id.btn5, R.id.btn6, R.id.btn7, R.id.btn8, R.id.btn9,
@@ -33,7 +54,19 @@ class MainActivity : AppCompatActivity() {
 
         for (id in buttonIds) {
             val btn = findViewById<Button>(id)
-            btn?.setOnClickListener { onButtonClick(btn) }
+            btn?.let { b ->
+                // Set a modern ripple background for engaging feedback
+                b.background = ContextCompat.getDrawable(this, R.drawable.btn_ripple)
+                b.setOnClickListener { onButtonClick(b) }
+                // Bounce/shake effect for number/operator input on press
+                b.setOnTouchListener { v, event ->
+                    v.animate().cancel()
+                    v.animate().scaleX(0.93f).scaleY(0.93f).setDuration(70).withEndAction {
+                        v.animate().scaleX(1.0f).scaleY(1.0f).setDuration(110).start()
+                    }.start()
+                    false
+                }
+            }
         }
     }
 
@@ -61,58 +94,102 @@ class MainActivity : AppCompatActivity() {
 
     /**
      * PUBLIC_INTERFACE
-     * Appends input to the current expression and updates the display.
+     * Appends input to the current expression and updates the display with fade/slide animation.
      */
     private fun processInput(input: String) {
         if (inputExpr == "NaN" || inputExpr == "Infinity" || inputExpr == "Error") {
             inputExpr = ""
         }
         inputExpr += input
+        animateInputEntry()
+    }
+
+    // Animates the input entry area with fade/slide effect
+    private fun animateInputEntry() {
+        display.clearAnimation()
+        val anim = AnimationUtils.loadAnimation(this, R.anim.fade_in_slide_up)
+        display.startAnimation(anim)
         updateDisplay()
     }
 
     /**
      * PUBLIC_INTERFACE
-     * Clears all input and resets the display.
+     * Clears all input and resets the display (animated clear).
      */
     private fun clearDisplay() {
         inputExpr = ""
-        updateDisplay()
+        display.animate().alpha(0f).setDuration(100).withEndAction {
+            updateDisplay()
+            display.animate().alpha(1f).setDuration(120).start()
+        }.start()
     }
 
     /**
      * PUBLIC_INTERFACE
-     * Deletes the last character of input.
+     * Deletes the last character of input with a quick shake animation.
      */
     private fun deleteLast() {
         if (inputExpr.isNotEmpty()) {
             inputExpr = inputExpr.dropLast(1)
-            updateDisplay()
+            display.animate().translationX(-16f).setDuration(60)
+                .withEndAction {
+                    display.animate().translationX(0f).setDuration(80).start()
+                    updateDisplay()
+                }.start()
         }
     }
 
     /**
      * PUBLIC_INTERFACE
-     * Evaluates the entered expression, shows the result, or error if evaluation fails.
+     * Evaluates the entered expression, shows the result, or error if evaluation fails,
+     * with animated transition highlighting result.
      */
     private fun evaluateAndDisplay() {
         try {
             val result = evaluateExpression(inputExpr)
-            display.text = result.toString()
-            lastAnswer = result
-            inputExpr = ""
+            val output = result.toString()
+            display.animate().alpha(0f).setDuration(110).withEndAction {
+                display.setTextColor(ContextCompat.getColor(this, R.color.primary))
+                display.text = output
+                lastAnswer = result
+                inputExpr = ""
+                display.animate().alpha(1f).setDuration(170).withEndAction {
+                    // revert color after a moment for minimalism
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        display.setTextColor(ContextCompat.getColor(this, R.color.black))
+                        updateDisplay()
+                    }, 540)
+                }.start()
+            }.start()
         } catch (e: Exception) {
-            display.text = "Error"
-            inputExpr = ""
+            display.animate().alpha(0f).setDuration(110).withEndAction {
+                display.setTextColor(ContextCompat.getColor(this, R.color.extra))
+                display.text = "Error"
+                inputExpr = ""
+                display.animate().alpha(1f).setDuration(140).withEndAction {
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        display.setTextColor(ContextCompat.getColor(this, R.color.black))
+                        updateDisplay()
+                    }, 670)
+                }.start()
+            }.start()
         }
     }
 
     /**
      * PUBLIC_INTERFACE
-     * Updates the calculator's display with the current expression.
+     * Updates the calculator's display with the current expression (smooth transition on change).
      */
     private fun updateDisplay() {
-        display.text = if (inputExpr.isEmpty()) "0" else inputExpr
+        val txt = if (inputExpr.isEmpty()) "0" else inputExpr
+        if (display.text != txt) {
+            display.animate().alpha(0.5f).setDuration(80).withEndAction {
+                display.text = txt
+                display.animate().alpha(1f).setDuration(100).start()
+            }.start()
+        } else {
+            display.text = txt // fallback
+        }
     }
 
     /**
