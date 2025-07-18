@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="primary">#8DBCC7</color>
+    <color name="secondary">#A4CCD9</color>
+    <color name="accent">#C4E1E6</color>
+    <color name="bg_main">#EBFFD8</color>
+    <color name="bg_header">#A4CCD9</color>
+    <color name="bg_grid">#C4E1E6</color>
+    <color name="display_bg">#FFFFFFFF</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="btn_primary_text">#FFFFFF</color>
+    <color name="btn_accent_text">#8DBCC7</color>
+    <color name="btn_neutral_text">#3C3C3C</color>
 </resources>

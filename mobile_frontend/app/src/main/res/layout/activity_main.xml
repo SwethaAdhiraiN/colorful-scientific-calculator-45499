@@ -3,15 +3,157 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_main">
 
+    <!-- Header -->
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/tvHeader"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello Kotlin World!"
+        android:text="@string/app_name"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:textColor="@color/primary"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/bg_header"
+        android:padding="16dp"/>
+
+    <!-- Display Area -->
+    <TextView
+        android:id="@+id/tvDisplay"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:gravity="end|center_vertical"
+        android:background="@color/display_bg"
+        android:textColor="@color/black"
+        android:textSize="32sp"
+        android:paddingEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tvHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/gridButtons"
+        android:text="0"/>
+
+    <!-- Button grid -->
+    <GridLayout
+        android:id="@+id/gridButtons"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDisplay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:columnCount="5"
+        android:rowCount="6"
+        android:alignmentMode="alignBounds"
+        android:useDefaultMargins="true"
+        android:background="@color/bg_grid">
+
+        <!-- First Row -->
+        <Button android:id="@+id/btnClear"
+            style="@style/CalcButtonAccent"
+            android:text="C" />
+        <Button android:id="@+id/btnDel"
+            style="@style/CalcButtonAccent"
+            android:text="DEL" />
+        <Button android:id="@+id/btnLeftParen"
+            style="@style/CalcButton"
+            android:text="(" />
+        <Button android:id="@+id/btnRightParen"
+            style="@style/CalcButton"
+            android:text=")" />
+        <Button android:id="@+id/btnDivide"
+            style="@style/CalcButtonPrimary"
+            android:text="÷" />
+
+        <!-- Second Row -->
+        <Button android:id="@+id/btnSin"
+            style="@style/CalcButton"
+            android:text="sin" />
+        <Button android:id="@+id/btnCos"
+            style="@style/CalcButton"
+            android:text="cos" />
+        <Button android:id="@+id/btnTan"
+            style="@style/CalcButton"
+            android:text="tan" />
+        <Button android:id="@+id/btnLn"
+            style="@style/CalcButton"
+            android:text="ln" />
+        <Button android:id="@+id/btnMultiply"
+            style="@style/CalcButtonPrimary"
+            android:text="×" />
+
+        <!-- Third Row -->
+        <Button android:id="@+id/btn7"
+            style="@style/CalcButton"
+            android:text="7" />
+        <Button android:id="@+id/btn8"
+            style="@style/CalcButton"
+            android:text="8" />
+        <Button android:id="@+id/btn9"
+            style="@style/CalcButton"
+            android:text="9" />
+        <Button android:id="@+id/btnPower"
+            style="@style/CalcButton"
+            android:text="^" />
+        <Button android:id="@+id/btnMinus"
+            style="@style/CalcButtonPrimary"
+            android:text="−" />
+
+        <!-- Fourth Row -->
+        <Button android:id="@+id/btn4"
+            style="@style/CalcButton"
+            android:text="4" />
+        <Button android:id="@+id/btn5"
+            style="@style/CalcButton"
+            android:text="5" />
+        <Button android:id="@+id/btn6"
+            style="@style/CalcButton"
+            android:text="6" />
+        <Button android:id="@+id/btnRoot"
+            style="@style/CalcButton"
+            android:text="√" />
+        <Button android:id="@+id/btnPlus"
+            style="@style/CalcButtonPrimary"
+            android:text="+" />
+
+        <!-- Fifth Row -->
+        <Button android:id="@+id/btn1"
+            style="@style/CalcButton"
+            android:text="1" />
+        <Button android:id="@+id/btn2"
+            style="@style/CalcButton"
+            android:text="2" />
+        <Button android:id="@+id/btn3"
+            style="@style/CalcButton"
+            android:text="3" />
+        <Button android:id="@+id/btnPercent"
+            style="@style/CalcButton"
+            android:text="%" />
+        <Button android:id="@+id/btnEquals"
+            style="@style/CalcButtonAccent"
+            android:text="=" />
+
+        <!-- Sixth Row -->
+        <Button android:id="@+id/btn0"
+            style="@style/CalcButtonWide"
+            android:text="0"
+            android:layout_columnSpan="2" />
+        <Button android:id="@+id/btnDot"
+            style="@style/CalcButton"
+            android:text="." />
+        <Button android:id="@+id/btnExp"
+            style="@style/CalcButton"
+            android:text="exp" />
+        <Button android:id="@+id/btnFact"
+            style="@style/CalcButton"
+            android:text="n!" />
+    </GridLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

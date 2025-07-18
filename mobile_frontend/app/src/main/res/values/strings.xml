@@ -1,3 +1,22 @@
 <resources>
-    <string name="app_name">mobile_frontend</string>
+    <string name="app_name">Colorful Scientific Calculator</string>
+    <string name="clear">C</string>
+    <string name="delete">DEL</string>
+    <string name="equals">=</string>
+    <string name="dot">.</string>
+    <string name="add">+</string>
+    <string name="subtract">−</string>
+    <string name="multiply">×</string>
+    <string name="divide">÷</string>
+    <string name="percent">%</string>
+    <string name="power">^</string>
+    <string name="root">√</string>
+    <string name="factorial">n!</string>
+    <string name="ln">ln</string>
+    <string name="exp">exp</string>
+    <string name="sin">sin</string>
+    <string name="cos">cos</string>
+    <string name="tan">tan</string>
+    <string name="left_paren">(</string>
+    <string name="right_paren">)</string>
 </resources>
